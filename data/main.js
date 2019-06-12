@@ -47,6 +47,7 @@ data.categories.sort(function(a,b){
     return a.positionNumber - b.positionNumber}
     );
 
+
 let button1 = document.createElement("button");
 button1.innerHTML =  data.categories[0].name;
 button1.id =  data.categories[0].id;
@@ -72,26 +73,19 @@ button1.onclick = function(event){
     for (i in data.items){
         if(data.categories[0].items[i] == data.items[i].id || data.categories[0].id == data.items[i].categories){
        
-        let button = document.createElement("div");
+        var button = document.createElement("div");
         button.innerHTML = data.items[i].title;
         button.className = "category_items"
         document.querySelector(".Category_content").appendChild(button);
+        chooseItem();
+       
+        }
         
-        let desc = document.createElement("h4");
-        desc.innerHTML = data.items[i].description;
-        document.querySelector(".Category_content").appendChild(desc);
-        
-        let long_desc = document.createElement("p");
-        long_desc.innerHTML = data.items[i].long_description;
-        document.querySelector(".Category_content").appendChild(long_desc);
-
-        let img = new Image();
-        img.src = data.items[i].gallery_images[0].url;
-        document.querySelector(".Category_content").appendChild(img);
-
-        }   
+           
     };
 }
+
+
 button2.onclick = function(event){
     clearBox();
     sortItems();
@@ -101,18 +95,7 @@ button2.onclick = function(event){
         button.className = "category_items"
         button.innerHTML = data.items[i].title;
         document.querySelector(".Category_content").appendChild(button);
-        
-        let desc = document.createElement("h4");
-        desc.innerHTML = data.items[i].description;
-        document.querySelector(".Category_content").appendChild(desc);
-        
-        let long_desc = document.createElement("p");
-        long_desc.innerHTML = data.items[i].long_description;
-        document.querySelector(".Category_content").appendChild(long_desc);
-
-        let img = new Image();
-        img.src = data.items[i].gallery_images[0].url;
-        document.querySelector(".Category_content").appendChild(img);
+        chooseItem()
         }
         
     };
@@ -128,19 +111,7 @@ button3.onclick = function(event){
         button.className = "category_items"
         button.innerHTML = data.items[i].title;
         document.querySelector(".Category_content").appendChild(button);
-
-
-        let desc = document.createElement("h4");
-        desc.innerHTML = data.items[i].description;
-        document.querySelector(".Category_content").appendChild(desc);
-        
-        let long_desc = document.createElement("p");
-        long_desc.innerHTML = data.items[i].long_description;
-        document.querySelector(".Category_content").appendChild(long_desc);
-
-        let img = new Image();
-        img.src = data.items[i].gallery_images[0].url;
-        document.querySelector(".Category_content").appendChild(img);
+        chooseItem()
         };
 }
 
@@ -157,25 +128,14 @@ button4.onclick = function(event){
         button.className = "category_items"
         button.innerHTML = data.items[i].title;
         document.querySelector(".Category_content").appendChild(button);
-        
-        let desc = document.createElement("h4");
-        desc.innerHTML = data.items[i].description;
-        document.querySelector(".Category_content").appendChild(desc);
-        
-        let long_desc = document.createElement("p");
-        long_desc.innerHTML = data.items[i].long_description;
-        document.querySelector(".Category_content").appendChild(long_desc);
-
-        let img = new Image();
-        img.src = data.items[i].gallery_images[0].url;
-        document.querySelector(".Category_content").appendChild(img);
-        
+        chooseItem()
         };
 }
 
 
 
 }
+
 
 }
 function clearBox(){
@@ -187,3 +147,18 @@ function sortItems(){
     })
     
 }
+function chooseItem(){
+   
+    let desc = document.createElement("h4");
+        desc.innerHTML = data.items[i].description;
+        document.querySelector(".Category_content").appendChild(desc);
+        
+        let long_desc = document.createElement("p");
+        long_desc.innerHTML = data.items[i].long_description;
+        document.querySelector(".Category_content").appendChild(long_desc);
+
+        let img = new Image();
+        img.src = data.items[i].gallery_images[0].url;
+        document.querySelector(".Category_content").appendChild(img);
+}
+
