@@ -126,22 +126,28 @@ const get_Items = get_id =>{
 
       
         desc.addEventListener("click", function(){
-        
+        show();
         let item = document.createElement("pre");
         item.innerHTML = element.long_description;
         document.querySelector(".modal_content").appendChild(item);
-        show();
+      
       
 
        
       })
     }
   });
+  let close_button = document.querySelector(".close_modal");
+  close_button.addEventListener("click", close);
 
 }
 const show = () => {
   let modal = document.querySelector(".modal_window");
   modal.classList.toggle("show_modal"); // це тільки накидки модалки. 
+}
+const close = () => {
+  let modal = document.querySelector(".modal_window").removeChild(this.modal);
+  
 }
 
 
