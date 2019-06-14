@@ -27,6 +27,7 @@ const start = () => { // переписати на стрілкові функц
   head_desc.className = "header"
   document.getElementById("Description").appendChild(head_desc);
   buttons();
+  
 }
 
 const buttons = () => {
@@ -46,6 +47,9 @@ const buttons = () => {
       }
       console.log('buttons', button_elements);
       document.querySelector(".Buttons").appendChild(button_elements);
+      if(!element.active){
+        button_elements.style.display = "none";
+      }
 
     });
 
@@ -90,12 +94,16 @@ const get_Items = get_id => {
         let desc = document.createElement("button");
         desc.innerHTML = element.description;
         document.querySelector(".div_class").appendChild(desc);
-
+        
         desc.id = element.id;
         desc.onclick = function () {
           show_Items(this.id);
+          
+         
+          
+          
         }
-
+        document.querySelector(".close_modal").onclick = close;
 
       }
     })
@@ -105,26 +113,77 @@ const get_Items = get_id => {
 }
 
 const show_Items = get_item_id => {
+  
   data.items.forEach(element => {
     if (element.id == get_item_id) {
+      
       let item = document.createElement("pre");
       item.innerHTML = element.long_description;
       document.querySelector(".modal_content").appendChild(item);
+      
+
+      let slider = document.createElement("div")
+      slider.className = "slider";
+      document.querySelector(".modal_content").appendChild(slider);
+
+
+
+      element.gallery_images.forEach(one_image => {
+        let img = document.createElement("img");
+        img.className = "slides";
+        let imgURL = one_image.url;
+        img.setAttribute('src', imgURL);
+        slider.appendChild(img);
+        
+      });
+
+      
+      
+      let right_click = document.createElement("span");
+      right_click.innerHTML = "&#10094;";
+      slider.appendChild(right_click);
+      right_click.onclick = function () {
+        plus_img(1)
+      }
+
+      let left_click = document.createElement("span");
+      left_click.innerHTML = "&#10095;";
+      slider.appendChild(left_click);
+      left_click.onclick = function() {
+        plus_img(-1);
+      }
+      
       show();
+      
+show_image(slideIndex);
     }
   });
+  
 }
 const show = () => {
   let modal = document.querySelector(".modal_window");
   modal.classList.toggle("show_modal");
+  
 }
 const close = () => {
+
   let modal = document.querySelector(".modal_window");
-  modal.style
 
-
-
+  const content = document.querySelector(".modal_content")
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+  modal.classList.toggle("closed_modal");
+  modal.classList.remove("closed_modal");
+  modal.classList.remove("show_modal");
 }
+const window_click = event =>{
+  const modal = document.querySelector(".modal_window");
+  if(event.target === modal){
+    close();
+  }
+}
+
 const show_all_Items = () => {
   sortItems();
   let div = document.createElement("div");
@@ -151,7 +210,27 @@ const show_all_Items = () => {
 
   });
 }
+let slideIndex = 1;
+
+function plus_img(n){
+  show_image(slideIndex += n);  
+}
+
+function show_image(n) {
+  let i;
+  let give_images = document.getElementsByClassName("slides");
+  if(n > give_images.lenght){slideIndex == 1;} // 
+  if (n < 1){ slideIndex == give_images.lenght}
+  for (i = 0; i < give_images.length; i++) {
+    give_images[i].style.display = "none"; 
+  }
+  give_images[slideIndex - 1].style.display = "block"; 
+  console.log(give_images.length);
+  console.log(n);
+}
 
 
 
+
+window.addEventListener("click", window_click);
 document.addEventListener("DOMContentLoaded", getAllData());

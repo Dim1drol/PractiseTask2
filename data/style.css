@@ -47,10 +47,14 @@
   line-height: 1.5rem;
   text-align: center;
   cursor: pointer;
+  background-color: red;
  
 }
 
-
+.slides{
+  width: 100px;
+  height: 100px;
+}
 
 .category_items{
     width: 100%;
