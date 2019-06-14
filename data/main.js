@@ -26,7 +26,7 @@ const start = () => { // переписати на стрілкові функц
   head_desc.appendChild(text);
   head_desc.className = "header"
   document.getElementById("Description").appendChild(head_desc);
-  buttons(); 
+  buttons();
 }
 
 const buttons = () => {
@@ -50,12 +50,11 @@ const buttons = () => {
         button_elements.style.display = "none";
       }
     });
-    
-  }
-  else{
-  show_all_Items();
-}
 
+  } else {
+    show_all_Items();
+
+  }
 }
 
 const clearBox = () => {
@@ -79,7 +78,7 @@ const get_Items = get_id => {
   let div = document.createElement("div");
   div.className = "div_class";
   document.querySelector(".Category_content").appendChild(div);
-  
+
   data.items.forEach(element => {
     element.categories.forEach(category => {
       if (category == get_id) {
@@ -99,50 +98,40 @@ const get_Items = get_id => {
           show_Items(this.id);
           
         }
-        document.querySelector(".close_modal").onclick = close;
-        
+
+
       }
       
     })
     
    
   });
-  
- 
+
+  document.querySelector(".close_modal").onclick = close;
 }
-  
-const show_Items = get_item_id =>{
 
-data.items.forEach(element => {
-  if(element.id == get_item_id){
-    let item = document.createElement("pre");
-    item.innerHTML = element.long_description;
-    document.querySelector(".modal_content").appendChild(item);
-
-    
-    show();
-
-
-  }
-});
+const show_Items = get_item_id => {
+  data.items.forEach(element => {
+    if (element.id == get_item_id) {
+      let item = document.createElement("pre");
+      item.innerHTML = element.long_description;
+      document.querySelector(".modal_content").appendChild(item);
+      show();
+    }
+  });
 }
 const show = () => {
-  const modal = document.querySelector(".modal_window");
+  let modal = document.querySelector(".modal_window");
   modal.classList.toggle("show_modal");
- 
 }
 const close = () => {
-  const modal = document.querySelector(".modal_window");
-  const content = document.querySelector(".modal_content")
-  while (content.firstChild) {
-    content.removeChild(content.firstChild);
-  }
-  modal.classList.toggle("closed_modal");
-  modal.classList.remove("closed_modal");
-  modal.classList.remove("show_modal");
-}
+  let modal = document.querySelector(".modal_window");
+  modal.style
 
-const show_all_Items = () =>{
+
+
+}
+const show_all_Items = () => {
   sortItems();
   let div = document.createElement("div");
   div.className = "div_class";
@@ -152,11 +141,11 @@ const show_all_Items = () =>{
     let title = document.createElement("h4");
     title.innerHTML = element.title;
     document.querySelector(".div_class").appendChild(title);
-    
+
     let img = new Image();
     img.src = element.gallery_images[0].url;
     document.querySelector(".div_class").appendChild(img);
-    
+
     let desc = document.createElement("button");
     desc.innerHTML = element.description;
     document.querySelector(".div_class").appendChild(desc);
@@ -165,7 +154,7 @@ const show_all_Items = () =>{
     desc.onclick = function () {
       show_Items(this.id);
     }
-    
+
   });
 }
 
