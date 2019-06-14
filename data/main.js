@@ -46,14 +46,16 @@ const buttons = () => {
       }
       console.log('buttons', button_elements);
       document.querySelector(".Buttons").appendChild(button_elements);
-
+      if(!element.active){
+        button_elements.style.display = "none";
+      }
     });
     
   }
   else{
   show_all_Items();
- 
 }
+
 }
 
 const clearBox = () => {
@@ -95,37 +97,51 @@ const get_Items = get_id => {
         desc.id = element.id;
         desc.onclick = function () {
           show_Items(this.id);
+          
         }
-       
+        document.querySelector(".close_modal").onclick = close;
         
       }
+      
     })
+    
+   
   });
   
-  document.querySelector(".close_modal").onclick = close;
+ 
 }
-
+  
 const show_Items = get_item_id =>{
+
 data.items.forEach(element => {
   if(element.id == get_item_id){
     let item = document.createElement("pre");
     item.innerHTML = element.long_description;
     document.querySelector(".modal_content").appendChild(item);
+
+    
     show();
+
+
   }
 });
 }
 const show = () => {
-  let modal = document.querySelector(".modal_window");
-  modal.classList.toggle("show_modal"); 
+  const modal = document.querySelector(".modal_window");
+  modal.classList.toggle("show_modal");
+ 
 }
 const close = () => {
-  let modal = document.querySelector(".modal_window");
-  modal.style
- 
-
-
+  const modal = document.querySelector(".modal_window");
+  const content = document.querySelector(".modal_content")
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+  modal.classList.toggle("closed_modal");
+  modal.classList.remove("closed_modal");
+  modal.classList.remove("show_modal");
 }
+
 const show_all_Items = () =>{
   sortItems();
   let div = document.createElement("div");
@@ -153,6 +169,12 @@ const show_all_Items = () =>{
   });
 }
 
-
+const window_click = event =>{
+  const modal = document.querySelector(".modal_window");
+  if(event.target === modal){
+    close();
+  }
+}
 
 document.addEventListener("DOMContentLoaded", getAllData());
+window.addEventListener("click", window_click);
