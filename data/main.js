@@ -1,16 +1,16 @@
 let data;
-const getAllData = async ()  => { 
+const getAllData = async () => {
   try {
-      const response = await fetch('data/test.json', {
-        method: 'GET'
-      })
-      if (response){
-        data = await response.json()
-        start();
-      }
-  }catch (error){
+    const response = await fetch('data/test.json', {
+      method: 'GET'
+    })
+    if (response) {
+      data = await response.json()
+      start();
+    }
+  } catch (error) {
 
-      console.log('request filed', error);
+    console.log('request filed', error);
   }
 }
 
@@ -26,7 +26,7 @@ const start = () => { // переписати на стрілкові функц
   head_desc.appendChild(text);
   head_desc.className = "header"
   document.getElementById("Description").appendChild(head_desc);
-  buttons(); // ось такі пробіли неварто робити. навіщо?
+  buttons(); 
 }
 
 const buttons = () => {
@@ -34,121 +34,125 @@ const buttons = () => {
     return a.positionNumber - b.positionNumber
   });
 
-  let a = get_id =>{
-    clearBox();
-    sortItems();
-   
-  
-  }
-  if(data.enable_multiple_lists){
-  data.categories.forEach(element => {
-    let button_elements = document.createElement("button");
+  if (data.enable_multiple_lists) {
+    console.log('data.categories', data.categories)
+    data.categories.forEach(element => {
+      let button_elements = document.createElement("button");
 
-    button_elements.innerHTML = element.name;
-    button_elements.id = element.id;
+      button_elements.innerHTML = element.name;
+      button_elements.id = element.id;
+      button_elements.onclick = function () {
+        get_Items(this.id);
+      }
+      console.log('buttons', button_elements);
+      document.querySelector(".Buttons").appendChild(button_elements);
 
-
-    button_elements.addEventListener("click", 
-    function () { 
-     clearBox();
-     sortItems();
-     if(element.id == data.categories[0].id ){
-       get_Items(0);
-     }
-     if(element.id == data.categories[1].id){
-      get_Items(3);
-     }
-     if(element.id == data.categories[2].id){
-      get_Items(2);
-     }
-     if(element.id == data.categories[3].id){//ось тут я не зміг по іншому до того дойти, тому залишив щоб хоча би так виводило...
-      get_Items(1);
-     }
-   })
-   if(element.active == false){
-    button_elements.style.display = "none";
-   }
-    document.querySelector(".Buttons").appendChild(button_elements);
+    });
     
-    console.log(button_elements);  
-      }); 
-    }
-    else{
-      sortItems();
-      get_Items(0);
-      get_Items(1);
-      get_Items(2);
-      get_Items(3);
-    }     
-}
-
-
-  
-
-
-
-
-const clearBox =  () => {
-  
-  const content = document.querySelector(".Category_content")
-  while (content.firstChild) {
-  content.removeChild(content.firstChild);
   }
+  else{
+  show_all_Items();
  
 }
+}
 
-const  sortItems = () => {
+const clearBox = () => {
+
+  const content = document.querySelector(".Category_content")
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+
+}
+
+const sortItems = () => {
   data.items.sort(function (a, b) {
-  return a.position - b.position;
+    return a.position - b.position;
   })
 
 }
-const get_Items = get_id =>{
+const get_Items = get_id => {
+  clearBox();
+  sortItems();
   let div = document.createElement("div");
   div.className = "div_class";
   document.querySelector(".Category_content").appendChild(div);
+  
   data.items.forEach(element => {
-    if (data.categories[get_id].element == element.id || data.categories[get_id].id == element.categories) {
+    element.categories.forEach(category => {
+      if (category == get_id) {
+        let title = document.createElement("h4");
+        title.innerHTML = element.title;
+        document.querySelector(".div_class").appendChild(title);
+        let img = new Image();
 
-      let title = document.createElement("h4");
-      title.innerHTML = element.title;
-      document.querySelector(".div_class").appendChild(title);
+        img.src = element.gallery_images[0].url;
+        document.querySelector(".div_class").appendChild(img);
+        let desc = document.createElement("button");
+        desc.innerHTML = element.description;
+        document.querySelector(".div_class").appendChild(desc);
 
-     
-
-      let img = new Image();
-      img.src = element.gallery_images[0].url;
-      document.querySelector(".div_class").appendChild(img);
-
-      let desc = document.createElement("button");
-      desc.innerHTML = element.description;
-      document.querySelector(".div_class").appendChild(desc);
-
-      
-        desc.addEventListener("click", function(){
-        show();
-        let item = document.createElement("pre");
-        item.innerHTML = element.long_description;
-        document.querySelector(".modal_content").appendChild(item);
-      
-      
-
+        desc.id = element.id;
+        desc.onclick = function () {
+          show_Items(this.id);
+        }
        
-      })
-    }
+        
+      }
+    })
   });
-  let close_button = document.querySelector(".close_modal");
-  close_button.addEventListener("click", close);
+  
+  document.querySelector(".close_modal").onclick = close;
+}
 
+const show_Items = get_item_id =>{
+data.items.forEach(element => {
+  if(element.id == get_item_id){
+    let item = document.createElement("pre");
+    item.innerHTML = element.long_description;
+    document.querySelector(".modal_content").appendChild(item);
+    show();
+  }
+});
 }
 const show = () => {
   let modal = document.querySelector(".modal_window");
-  modal.classList.toggle("show_modal"); // це тільки накидки модалки. 
+  modal.classList.toggle("show_modal"); 
 }
 const close = () => {
-  let modal = document.querySelector(".modal_window").removeChild(this.modal);
-  
+  let modal = document.querySelector(".modal_window");
+  modal.style
+ 
+
+
 }
+const show_all_Items = () =>{
+  sortItems();
+  let div = document.createElement("div");
+  div.className = "div_class";
+  document.querySelector(".Category_content").appendChild(div);
+
+  data.items.forEach(element => {
+    let title = document.createElement("h4");
+    title.innerHTML = element.title;
+    document.querySelector(".div_class").appendChild(title);
+    
+    let img = new Image();
+    img.src = element.gallery_images[0].url;
+    document.querySelector(".div_class").appendChild(img);
+    
+    let desc = document.createElement("button");
+    desc.innerHTML = element.description;
+    document.querySelector(".div_class").appendChild(desc);
+
+    desc.id = element.id;
+    desc.onclick = function () {
+      show_Items(this.id);
+    }
+    
+  });
+}
+
 
 
 document.addEventListener("DOMContentLoaded", getAllData());

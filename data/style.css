@@ -11,12 +11,13 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
-  visibility: hidden;
+  display: none;
   transform: scale(1.1);
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
 }
+
 .modal_content{
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -31,9 +32,14 @@
 }
 .show_modal{
   opacity: 1;
-  visibility: visible;
+  display: block;
   transform: scale(1.0);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+.closed_modal{
+  display: none;
+
+  
 }
 .close_modal{
   float: right;
@@ -43,9 +49,7 @@
   cursor: pointer;
  
 }
-.closed_modal{
-  display: none;
-}
+
 
 
 .category_items{
