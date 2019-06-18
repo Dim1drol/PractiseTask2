@@ -21,12 +21,18 @@ const start = () => { // переписати на стрілкові функц
   const head = document.getElementById("title");
   head.innerHTML = data.name;
 
-  const head_desc = document.createElement("h2");
+  const head_desc = document.createElement("p");
   const text = document.createTextNode(data.description);
   head_desc.appendChild(text);
   head_desc.className = "header"
-  document.getElementById("Description").appendChild(head_desc);
+  document.getElementById("desc").appendChild(head_desc);
   buttons();
+
+  let link = document.createElement('link');
+	link.setAttribute("rel", "shortcut icon");
+	link.setAttribute("type", "image/png");
+	link.href = data.icon.file.url;
+	document.getElementsByTagName('head')[0].append(link);
   
 }
 
@@ -84,7 +90,7 @@ const get_Items = get_id => {
   data.items.forEach(element => {
     element.categories.forEach(category => {
       if (category == get_id) {
-        let title = document.createElement("h4");
+        let title = document.createElement("p");
         title.innerHTML = element.title;
         document.querySelector(".div_class").appendChild(title);
         let img = new Image();
@@ -120,42 +126,61 @@ const show_Items = get_item_id => {
       let item = document.createElement("pre");
       item.innerHTML = element.long_description;
       document.querySelector(".modal_content").appendChild(item);
+     
       
+      
+
 
       let slider = document.createElement("div")
       slider.className = "slider";
       document.querySelector(".modal_content").appendChild(slider);
-
-
-
+    
       element.gallery_images.forEach(one_image => {
         let img = document.createElement("img");
-        img.className = "slides";
+        img.classList.add("mySlides");
         let imgURL = one_image.url;
         img.setAttribute('src', imgURL);
         slider.appendChild(img);
-        
-      });
-
       
-      
+      });  
       let right_click = document.createElement("span");
       right_click.innerHTML = "&#10094;";
-      slider.appendChild(right_click);
       right_click.onclick = function () {
         plus_img(1)
       }
+      slider.appendChild(right_click);
+      
 
       let left_click = document.createElement("span");
       left_click.innerHTML = "&#10095;";
-      slider.appendChild(left_click);
       left_click.onclick = function() {
         plus_img(-1);
+        }
+      slider.appendChild(left_click);
+      
+      let video = document.createElement("div")
+      video.className = "video";
+      document.querySelector(".modal_content").appendChild(video);
+
+      if (element.videoUrl != null){
+        let title = document.createElement("p");
+        title.className = "video_title";
+        title.innerHTML = element.videoTitle;
+       
+
+        let video_content = document.createElement("iframe");
+        video_content.src = getFrame(element.videoUrl);
+        video_content.className = "video_content";
+        video_content.setAttribute('frameborder', "0");
+        video_content.setAttribute('allowfullscreen', "");
+        video.appendChild(title);
+        video.appendChild(video_content);
       }
+      show_image(1);
       
       show();
       
-show_image(slideIndex);
+      
     }
   });
   
@@ -210,24 +235,17 @@ const show_all_Items = () => {
 
   });
 }
-let slideIndex = 1;
+function getFrame(url){
+  var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	var match = url.match(regExp);
 
-function plus_img(n){
-  show_image(slideIndex += n);  
+	if (match && match[2].length == 11) {
+		return "//www.youtube.com/embed/" + match[2];
+	} else {
+		return 'error';
+	}
 }
 
-function show_image(n) {
-  let i;
-  let give_images = document.getElementsByClassName("slides");
-  if(n > give_images.lenght){slideIndex == 1;} // 
-  if (n < 1){ slideIndex == give_images.lenght}
-  for (i = 0; i < give_images.length; i++) {
-    give_images[i].style.display = "none"; 
-  }
-  give_images[slideIndex - 1].style.display = "block"; 
-  console.log(give_images.length);
-  console.log(n);
-}
 
 
 
