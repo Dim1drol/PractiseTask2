@@ -29,13 +29,13 @@ const start = () => { // переписати на стрілкові функц
   buttons();
 
   let link = document.createElement('link');
-	link.setAttribute("rel", "shortcut icon");
-	link.setAttribute("type", "image/png");
-	link.href = data.icon.file.url;
+  link.setAttribute("rel", "shortcut icon");
+  link.setAttribute("type", "image/png");
+  link.href = data.icon.file.url;
   document.getElementsByTagName('head')[0].append(link);
-  
+
   setBgColor();
-  
+
 }
 
 const buttons = () => {
@@ -55,7 +55,7 @@ const buttons = () => {
       }
       console.log('buttons', button_elements);
       document.querySelector(".Buttons").appendChild(button_elements);
-      if(!element.active){
+      if (!element.active) {
         button_elements.style.display = "none";
       }
 
@@ -85,20 +85,20 @@ const sortItems = () => {
 const get_Items = get_id => {
   clearBox();
   sortItems();
-  
+
   let div = document.createElement("div");
   div.className = "div_class";
-  document.querySelector(".Category_content").appendChild(div); 
-  
-  data.items.forEach(element => {
-  
-    element.categories.forEach(category => {
-      
-      if (category == get_id) {
-              
+  document.querySelector(".Category_content").appendChild(div);
 
-        
-        
+  data.items.forEach(element => {
+
+    element.categories.forEach(category => {
+
+      if (category == get_id) {
+
+
+
+
         let img = new Image();
 
         img.src = element.gallery_images[0].url;
@@ -107,14 +107,14 @@ const get_Items = get_id => {
         let desc = document.createElement("button");
         desc.innerHTML = element.description;
         document.querySelector(".div_class").appendChild(desc);
-        
+
         desc.id = element.id;
         desc.onclick = function () {
           show_Items(this.id);
-          
-         
-          
-          
+
+
+
+
         }
         document.querySelector(".close_modal").onclick = close;
 
@@ -122,24 +122,24 @@ const get_Items = get_id => {
     })
   });
 
-  
+
 }
 
 const show_Items = get_item_id => {
-  
+
   data.items.forEach(element => {
     if (element.id == get_item_id) {
-      
+
       let title = document.createElement("p");
       title.innerHTML = element.title;
       document.querySelector(".modal_content").appendChild(title);
-      
-  
+
+
       let slider = document.createElement("div")
       slider.className = "slider";
       document.querySelector(".modal_content").appendChild(slider);
 
-      
+
 
       let right_click = document.createElement("span");
       right_click.innerHTML = "&#10094;";
@@ -147,47 +147,47 @@ const show_Items = get_item_id => {
       right_click.onclick = function () {
         plus_img(-1)
       }
-     slider.appendChild(right_click);
+      slider.appendChild(right_click);
       element.gallery_images.forEach(one_image => {
-        
+
         let img = document.createElement("img");
         img.className = "mySlides";
         let imgURL = one_image.url;
         img.setAttribute('src', imgURL);
         slider.appendChild(img);
-        
-      
-      });  
+
+
+      });
       let left_click = document.createElement("span");
       left_click.innerHTML = "&#10095;";
       left_click.className = "next";
-      left_click.onclick = function() {
+      left_click.onclick = function () {
         plus_img(1);
-        }
-        slider.appendChild(left_click);
-      
+      }
+      slider.appendChild(left_click);
+
       let item = document.createElement("pre");
-      
+
       item.innerHTML = element.long_description;
-      
+
       document.querySelector(".modal_content").appendChild(item);
 
-        
-        if(element.gallery_images.length == 1){
-          left_click.style.display = "none";
-          right_click.style.display = "none";
-        }
-        
-      
+
+      if (element.gallery_images.length == 1) {
+        left_click.style.display = "none";
+        right_click.style.display = "none";
+      }
+
+
       let video = document.createElement("div")
       video.className = "video";
       document.querySelector(".modal_content").appendChild(video);
 
-      if (element.videoUrl != null){
+      if (element.videoUrl != null) {
         let title = document.createElement("p");
         title.className = "video_title";
         title.innerHTML = element.videoTitle;
-       
+
 
         let video_content = document.createElement("iframe");
         video_content.src = getFrame(element.videoUrl);
@@ -198,23 +198,23 @@ const show_Items = get_item_id => {
         video.appendChild(video_content);
       }
       show_image(slideIndex);
-      
+
       show();
-      
-      
+
+
     }
   });
-  
+
 }
 const show = () => {
   let modal = document.querySelector(".modal_window");
   modal.classList.toggle("show_modal");
-  
+
 }
 const close = () => {
 
   let modal = document.querySelector(".modal_window");
-  
+
   const content = document.querySelector(".modal_content")
   while (content.firstChild) {
     content.removeChild(content.firstChild);
@@ -222,13 +222,13 @@ const close = () => {
   modal.classList.toggle("closed_modal");
   modal.classList.remove("closed_modal");
   modal.classList.remove("show_modal");
-  
+
   slideIndex = 1;
-  
+
 }
-const window_click = event =>{
+const window_click = event => {
   const modal = document.querySelector(".modal_window");
-  if(event.target === modal){
+  if (event.target === modal) {
     close();
   }
 }
@@ -259,20 +259,21 @@ const show_all_Items = () => {
 
   });
 }
-function getFrame(url){
-  let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-	let match = url.match(regExp);
 
-	if (match && match[2].length == 11) {
-		return "//www.youtube.com/embed/" + match[2];
-	} else {
-		return 'error';
-	}
+function getFrame(url) {
+  let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  let match = url.match(regExp);
+
+  if (match && match[2].length == 11) {
+    return "//www.youtube.com/embed/" + match[2];
+  } else {
+    return 'error';
+  }
 }
-const setBgColor = () =>{
-  document.body.style.backgroundColor =  "#" + data.accentColorSecondary;
+const setBgColor = () => {
+  document.body.style.backgroundColor = "#" + data.accentColorSecondary;
   document.body.style.color = "#" + data.accentColor;
-  
+
 }
 
 
