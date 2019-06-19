@@ -24,7 +24,7 @@
       "name": "Category 3",
       "positionNumber": 3,
       "items": [109, 103, 108],
-      "active": false
+      "active": true
     },
     {
       "id": 301,
@@ -98,7 +98,7 @@
         }
       ],
       "categories":[303],
-      "videoUrl":"https://youtu.be/K4wEI5zhHB0",
+      "videoUrl":"https://www.youtube.com/watch?v=M9DL52zPYpw",
       "videoTitle":"iPhone X — Introducing iPhone X — Apple"
     },
     {
@@ -212,7 +212,7 @@
         }
       ],
       "categories":[303],
-      "videoUrl":"https://youtu.be/Rykmwn0SMWU",
+      "videoUrl":"https://www.youtube.com/watch?v=wZmFsz6hNvE",
       "videoTitle":"Introducing Pixel, Phone by Google"
     },
     {

@@ -32,7 +32,9 @@ const start = () => { // переписати на стрілкові функц
 	link.setAttribute("rel", "shortcut icon");
 	link.setAttribute("type", "image/png");
 	link.href = data.icon.file.url;
-	document.getElementsByTagName('head')[0].append(link);
+  document.getElementsByTagName('head')[0].append(link);
+  
+  setBgColor();
   
 }
 
@@ -83,20 +85,25 @@ const sortItems = () => {
 const get_Items = get_id => {
   clearBox();
   sortItems();
+  
   let div = document.createElement("div");
   div.className = "div_class";
-  document.querySelector(".Category_content").appendChild(div);
-
+  document.querySelector(".Category_content").appendChild(div); 
+  
   data.items.forEach(element => {
+  
     element.categories.forEach(category => {
+      
       if (category == get_id) {
-        let title = document.createElement("p");
-        title.innerHTML = element.title;
-        document.querySelector(".div_class").appendChild(title);
+              
+
+        
+        
         let img = new Image();
 
         img.src = element.gallery_images[0].url;
         document.querySelector(".div_class").appendChild(img);
+
         let desc = document.createElement("button");
         desc.innerHTML = element.description;
         document.querySelector(".div_class").appendChild(desc);
@@ -115,7 +122,7 @@ const get_Items = get_id => {
     })
   });
 
-  document.querySelector(".close_modal").onclick = close;
+  
 }
 
 const show_Items = get_item_id => {
@@ -123,40 +130,54 @@ const show_Items = get_item_id => {
   data.items.forEach(element => {
     if (element.id == get_item_id) {
       
-      let item = document.createElement("pre");
-      item.innerHTML = element.long_description;
-      document.querySelector(".modal_content").appendChild(item);
-     
+      let title = document.createElement("p");
+      title.innerHTML = element.title;
+      document.querySelector(".modal_content").appendChild(title);
       
-      
-
-
+  
       let slider = document.createElement("div")
       slider.className = "slider";
       document.querySelector(".modal_content").appendChild(slider);
-    
+
+      
+
+      let right_click = document.createElement("span");
+      right_click.innerHTML = "&#10094;";
+      right_click.className = "prev";
+      right_click.onclick = function () {
+        plus_img(-1)
+      }
+     slider.appendChild(right_click);
       element.gallery_images.forEach(one_image => {
+        
         let img = document.createElement("img");
-        img.classList.add("mySlides");
+        img.className = "mySlides";
         let imgURL = one_image.url;
         img.setAttribute('src', imgURL);
         slider.appendChild(img);
+        
       
       });  
-      let right_click = document.createElement("span");
-      right_click.innerHTML = "&#10094;";
-      right_click.onclick = function () {
-        plus_img(1)
-      }
-      slider.appendChild(right_click);
-      
-
       let left_click = document.createElement("span");
       left_click.innerHTML = "&#10095;";
+      left_click.className = "next";
       left_click.onclick = function() {
-        plus_img(-1);
+        plus_img(1);
         }
-      slider.appendChild(left_click);
+        slider.appendChild(left_click);
+      
+      let item = document.createElement("pre");
+      
+      item.innerHTML = element.long_description;
+      
+      document.querySelector(".modal_content").appendChild(item);
+
+        
+        if(element.gallery_images.length == 1){
+          left_click.style.display = "none";
+          right_click.style.display = "none";
+        }
+        
       
       let video = document.createElement("div")
       video.className = "video";
@@ -176,7 +197,7 @@ const show_Items = get_item_id => {
         video.appendChild(title);
         video.appendChild(video_content);
       }
-      show_image(1);
+      show_image(slideIndex);
       
       show();
       
@@ -193,7 +214,7 @@ const show = () => {
 const close = () => {
 
   let modal = document.querySelector(".modal_window");
-
+  
   const content = document.querySelector(".modal_content")
   while (content.firstChild) {
     content.removeChild(content.firstChild);
@@ -201,6 +222,9 @@ const close = () => {
   modal.classList.toggle("closed_modal");
   modal.classList.remove("closed_modal");
   modal.classList.remove("show_modal");
+  
+  slideIndex = 1;
+  
 }
 const window_click = event =>{
   const modal = document.querySelector(".modal_window");
@@ -236,8 +260,8 @@ const show_all_Items = () => {
   });
 }
 function getFrame(url){
-  var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-	var match = url.match(regExp);
+  let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	let match = url.match(regExp);
 
 	if (match && match[2].length == 11) {
 		return "//www.youtube.com/embed/" + match[2];
@@ -245,7 +269,11 @@ function getFrame(url){
 		return 'error';
 	}
 }
-
+const setBgColor = () =>{
+  document.body.style.backgroundColor =  "#" + data.accentColorSecondary;
+  document.body.style.color = "#" + data.accentColor;
+  
+}
 
 
 

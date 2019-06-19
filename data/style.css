@@ -14,9 +14,8 @@ body{
 }
 
 #Description{
-  height: 500px;
+  height: 200px;
     width: 100%;
-    background-color: #ccc;
     display: flex;
     justify-content: center;
 }
@@ -36,10 +35,10 @@ body{
 
 #desc p{
   align-self: center;   
-   height: auto;
-    margin: 0 auto;
-    font-size: 18px;
-    text-align: justify;
+  height: auto;
+   margin: 0 auto;
+  font-size: 18px;
+  text-align: justify;
     padding: 15px;
     background-color: white;
 }
@@ -54,22 +53,24 @@ main{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .Buttons button{
-  margin: 30px;
-    border-radius: 5px;
-    width: 200px;
-    height: 50px;
-    padding: 10px;
-    text-align:  center;
-    background-color: whitesmoke;
-    cursor: pointer;
-    text-decoration: none;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  padding: .5em 2em;
+  outline: none;
+  border-width: 2px 0;
+  border-style: solid none;
+  border-color: #FDBE33 #000 #D77206;
+  border-radius: 6px;
+  background: linear-gradient(#F3AE0F, #E38916) #E38916;
+  transition: 0.2s;
+  
 }
 .Buttons button:hover{
-  background-color: red;
   box-shadow: 1px 3px 5px lightgray;
 }
 
@@ -80,34 +81,53 @@ main{
   margin: 10px;   
   padding: 10px;
   cursor: pointer;
+  width: auto;
+  height: auto;
   display: flex;
+  
   flex-direction: row;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  
+ 
   transition: 0.5s all;
+  
 }
-.Category_content button{
-  margin: 30px;
+.div_class>*{
+  flex: 1 1 250px;
+}
+
+
+.div_class button{
+ 
+    margin: 30px;
    border-radius: 5px;
     width: auto;
-    height: auto;
+    height: 100%;
     padding: 10px;
     text-align:  center;
-    background-color: whitesmoke;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-}
-.Category_content p{
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  font-size: 16px;
-  margin: 0;
-  height: auto;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+    padding: .5em 2em;
+    outline: none;
+    border-width: 2px 0;
+    border-style: solid none;
+    border-color: #FDBE33 #000 #D77206;
+    border-radius: 6px;
+    background: linear-gradient(#F3AE0F, #E38916) #E38916;
+    transition: 0.2s;
 }
 
-.Category_content img{
-  height: 70px;
-  width: 70px;
-  margin: 3px;
+
+.div_class img{
+  height: 150px;
+  width: 230px;
+  margin: 5px;
+  border-radius: 3px 3px 3px 3px;
+  
 }
 .modal_window{
   position: fixed;
@@ -123,7 +143,7 @@ main{
 }
 
 .modal_content{
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -131,8 +151,20 @@ main{
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   z-index: 1;
-  width:  auto;
-  height: auto;
+  width: 63.5rem;
+  height: 37.5rem;
+  overflow-y: scroll;
+  
+}
+.modal_content pre{
+  align-content: center;
+  align-self: center;
+  padding: 10px;
+  width: 90%;
+  background-color: aliceblue;
+  opacity: 0.7;
+  white-space: pre-line;
+  text-align: center;
 }
 
 .show_modal{
@@ -152,14 +184,40 @@ main{
   line-height: 1.5rem;
   text-align: center;
   cursor: pointer;
-  background-color: red;
- 
+  display: fixed;
+  color: wheat;
+  font-size: 40px;
 }
 
 .mySlides{
-  width: 100px;
-  height: 100px;
+  width: 98%;
+ height: 280px;
+ display: none;
+ 
 }
 
+.slider{
+  display: flex;
+}
+.prev, .next{
+  cursor: pointer;
+  font-size: 40px;
+  align-self: center;
+
+}
+.modal_content p {
+  text-align:  center;
+  font-weight: bold;
+  font-size: 16pt;
+  background-color: aliceblue;
+}
+.video{
+  text-align: center;
+
+}
+iframe{
+  width: 100%;
+  height: 360px;
+}
 
 
